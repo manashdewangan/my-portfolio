@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Github, Linkedin } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { label: "About", href: "/#about" },
@@ -12,18 +13,45 @@ const navItems = [
   { label: "Projects", href: "/#projects" },
   { label: "Contact", href: "/contact" },
 ];
-
 export const Navbar = () => {
+  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      if (pathname !== "/") return;
+
+      const sections = navItems
+        .filter((item) => item.href.includes("#"))
+        .map((item) => item.href.split("#")[1]);
+
+      let currentSection = "";
+
+      sections.forEach((section) => {
+        const el = document.getElementById(section);
+
+        if (el) {
+          const rect = el.getBoundingClientRect();
+
+          if (rect.top <= 120 && rect.bottom >= 120) {
+            currentSection = `/#${section}`;
+          }
+        }
+      });
+
+      setActiveSection(currentSection);
     };
+
     window.addEventListener("scroll", handleScroll);
+
+    handleScroll();
+
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
   return (
     <motion.nav
@@ -40,16 +68,39 @@ export const Navbar = () => {
           className="text-2xl font-bold gradient-text"
           whileHover={{ scale: 1.05 }}
         >
-          MD
+          <Link href="/" className="text-2xl font-bold gradient-text">
+            MD
+          </Link>
         </motion.a>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <a key={item.label} href={item.href} className="nav-link">
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const isActive =
+              item.href === "/contact"
+                ? pathname === "/contact"
+                : pathname === "/" && activeSection === item.href;
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`relative transition-all duration-300 ${
+                  isActive
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {item.label}
+
+                {isActive && (
+                  <motion.span
+                    layoutId="navbar-indicator"
+                    className="absolute -bottom-1 left-0 h-[2px] w-full rounded-full bg-primary"
+                  />
+                )}
+              </Link>
+            );
+          })}
           <div className="flex items-center gap-4 ml-4 pl-4 border-l border-border">
             <motion.a
               href="https://github.com/manashdewangan"
@@ -95,19 +146,35 @@ export const Navbar = () => {
             className="md:hidden glass-card mt-4 mx-4 rounded-2xl overflow-hidden"
           >
             <div className="flex flex-col p-6 gap-4">
-              {navItems.map((item, index) => (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {item.label}
-                </motion.a>
-              ))}
+              {navItems.map((item, index) => {
+                const isActive = (() => {
+                  if (item.href === "/contact") {
+                    return pathname === "/contact";
+                  }
+
+                  return pathname === "/";
+                })();
+                return (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`text-lg font-medium transition-colors ${
+                        isActive
+                          ? "text-primary"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                );
+              })}
               <div className="flex items-center gap-4 pt-4 border-t border-border">
                 <Link
                   href="https://github.com/manashdewangan"
