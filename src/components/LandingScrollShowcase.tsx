@@ -14,21 +14,21 @@ export function LandingScrollShowcase() {
     offset: ["start end", "end start"],
   });
 
-  const frameY = useTransform(scrollYProgress, [0, 0.45, 1], [120, -10, -80]);
+  const frameY = useTransform(scrollYProgress, [0, 0.45, 1], [140, -10, -90]);
   const frameScale = useTransform(
     scrollYProgress,
-    [0, 0.42, 1],
-    [0.78, 1, 0.94],
+    [0, 0.45, 1],
+    [0.72, 1.02, 0.94],
   );
-  const frameRotateX = useTransform(scrollYProgress, [0, 0.5, 1], [8, 0, -6]);
-  const frameRotateY = useTransform(scrollYProgress, [0, 0.5, 1], [-6, 0, 5]);
-  const backLayerY = useTransform(scrollYProgress, [0, 1], [-42, 72]);
-  const midLayerY = useTransform(scrollYProgress, [0, 1], [52, -52]);
-  const textY = useTransform(scrollYProgress, [0, 1], [24, -38]);
+  const frameRotateX = useTransform(scrollYProgress, [0, 0.5, 1], [14, 0, -10]);
+  const frameRotateY = useTransform(scrollYProgress, [0, 0.5, 1], [-10, 0, 8]);
+  const backLayerY = useTransform(scrollYProgress, [0, 1], [-60, 90]);
+  const midLayerY = useTransform(scrollYProgress, [0, 1], [70, -70]);
+  const textY = useTransform(scrollYProgress, [0, 1], [30, -40]);
   const progressWidth = useTransform(
     scrollYProgress,
-    [0.18, 0.82],
-    ["12%", "88%"],
+    [0.15, 0.85],
+    ["10%", "95%"],
   );
 
   return (
