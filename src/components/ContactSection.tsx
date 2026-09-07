@@ -31,15 +31,17 @@ const contactInfo = [
   },
 ];
 
+import { SpotlightCard } from "./SpotlightCard";
+
 export const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section id="contact" className="py-32 relative overflow-hidden">
-      <div className="floating-blob blob-cyan w-[500px] h-[500px] -bottom-40 left-1/4 opacity-30" />
+      <div className="floating-blob blob-cyan w-[500px] h-[500px] -bottom-40 left-1/4 opacity-30 pointer-events-none" />
 
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 60 }}
@@ -53,45 +55,50 @@ export const ContactSection = () => {
             transition={{ duration: 0.6 }}
             className="text-primary text-sm font-mono mb-4 block"
           >
-            05. Contact
+            05. Get In Touch
           </motion.span>
           <h2 className="section-heading mb-6">
-            Lets Build <span className="gradient-text">Together</span>
+            Let&apos;s Build <span className="gradient-text">Something Extraordinary</span>
           </h2>
-          <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Im currently open to new opportunities and collaborations. Whether
-            you have a project in mind or just want to say hello, feel free to
-            reach out!
+          <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
+            I&apos;m currently open to new product engineering opportunities, full-stack & mobile roles, and freelance projects. Let&apos;s turn your roadmap into reality!
           </p>
 
-          {/* Contact Cards */}
-          <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          {/* Contact 3D Cards */}
+          <div className="grid sm:grid-cols-2 gap-5 mb-12">
             {contactInfo.map((item, index) => (
-              <motion.a
+              <motion.div
                 key={item.label}
-                href={item.href}
-                target={item.href.startsWith("http") ? "_blank" : undefined}
-                rel={
-                  item.href.startsWith("http")
-                    ? "noopener noreferrer"
-                    : undefined
-                }
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02 }}
-                className="glass-card rounded-2xl p-6 flex items-center gap-4 group hover:shadow-[var(--shadow-hover)] transition-all duration-300"
               >
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                  <item.icon className="text-primary" size={24} />
-                </div>
-                <div className="text-left">
-                  <p className="text-sm text-muted-foreground">{item.label}</p>
-                  <p className="font-medium group-hover:text-primary transition-colors">
-                    {item.value}
-                  </p>
-                </div>
-              </motion.a>
+                <SpotlightCard
+                  tiltIntensity={10}
+                  className="glass-card rounded-2xl p-6 h-full border border-border/60 hover:border-primary/50 transition-all duration-300 group"
+                >
+                  <a
+                    href={item.href}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={
+                      item.href.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                    className="flex items-center gap-4 text-left"
+                  >
+                    <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+                      <item.icon className="text-primary" size={24} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-mono text-muted-foreground mb-0.5">{item.label}</p>
+                      <p className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm sm:text-base">
+                        {item.value}
+                      </p>
+                    </div>
+                  </a>
+                </SpotlightCard>
+              </motion.div>
             ))}
           </div>
 
@@ -101,10 +108,10 @@ export const ContactSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="cta-primary inline-flex items-center gap-2"
+            className="cta-primary inline-flex items-center gap-2 text-base cursor-pointer"
           >
             <Send size={18} />
-            Send a Message
+            Send a Direct Message
           </motion.a>
         </motion.div>
       </div>

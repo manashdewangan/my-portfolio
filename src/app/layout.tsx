@@ -5,6 +5,9 @@ import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
+import { Canvas3DBackground } from "@/components/Canvas3DBackground";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { FloatingBottomNav } from "@/components/FloatingBottomNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,13 +27,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-primary/20`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <TooltipProvider>
+            <ScrollProgress />
+            <Canvas3DBackground />
             <Toaster />
             <Navbar />
-            {children}
+            <div className="relative z-10">{children}</div>
+            <FloatingBottomNav />
             <Footer />
           </TooltipProvider>
         </ThemeProvider>
