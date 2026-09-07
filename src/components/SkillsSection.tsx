@@ -1,43 +1,39 @@
 "use client";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { SpotlightCard } from "./SpotlightCard";
 
 const skillCategories = [
   {
     title: "Languages",
-    skills: ["JavaScript", "TypeScript"],
+    skills: ["JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3", "SQL", "PHP"],
     color: "primary",
   },
   {
-    title: "Frontend",
-    skills: ["React.js", "Next.js", "HTML5", "CSS3", "Tailwind CSS"],
+    title: "Frontend Frameworks",
+    skills: ["React.js", "Next.js (App Router)", "React Native", "Tailwind CSS", "Vite"],
     color: "secondary",
   },
   {
-    title: "Mobile",
-    skills: ["React Native"],
+    title: "State & Data Management",
+    skills: ["TanStack Query", "Redux Toolkit", "Context API", "Axios", "RESTful APIs"],
     color: "primary",
   },
   {
-    title: "State & Data",
-    skills: ["TanStack Query", "Redux"],
+    title: "UI Design & Systems",
+    skills: ["shadcn/ui", "Radix UI", "Framer Motion", "Ant Design", "Figma to Code"],
     color: "secondary",
   },
   {
-    title: "UI Libraries",
-    skills: ["shadcn/ui", "Ant Design"],
+    title: "Mobile Development",
+    skills: ["React Native", "Expo", "Native UI Elements", "Mobile UX"],
     color: "primary",
   },
   {
-    title: "Tools",
-    skills: ["Git", "GitHub", "Postman", "Figma"],
+    title: "Dev & Workflow Tools",
+    skills: ["Git", "GitHub", "Postman", "Vercel", "VS Code", "npm / bun"],
     color: "secondary",
-  },
-  {
-    title: "APIs",
-    skills: ["REST API"],
-    color: "primary",
   },
 ];
 
@@ -47,9 +43,9 @@ export const SkillsSection = () => {
 
   return (
     <section id="skills" className="py-32 relative overflow-hidden">
-      <div className="floating-blob blob-cyan w-[500px] h-[500px] -bottom-40 -left-40 opacity-40" />
+      <div className="floating-blob blob-cyan w-[500px] h-[500px] -bottom-40 -left-40 opacity-40 pointer-events-none" />
 
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 60 }}
@@ -64,13 +60,13 @@ export const SkillsSection = () => {
               transition={{ duration: 0.6 }}
               className="text-primary text-sm font-mono mb-4 block"
             >
-              02. Skills
+              02. Skills & Capabilities
             </motion.span>
             <h2 className="section-heading">
-              My <span className="gradient-text">Tech Stack</span>
+              Technical <span className="gradient-text">Proficiency</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mt-4">
-              Technologies and tools I use to bring ideas to life
+              Modern frontend and full-stack toolsets curated for crafting fast, responsive, and maintainable software.
             </p>
           </div>
 
@@ -81,86 +77,74 @@ export const SkillsSection = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                className="glass-card rounded-2xl p-6 group hover:shadow-[var(--shadow-hover)] transition-all duration-300"
               >
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <span
-                    className={`w-2 h-2 rounded-full ${
-                      category.color === "primary"
-                        ? "bg-primary"
-                        : "bg-secondary"
-                    }`}
-                  />
-                  {category.title}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.span
-                      key={skill}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{
-                        duration: 0.4,
-                        delay: categoryIndex * 0.1 + skillIndex * 0.05,
-                      }}
-                      className={`skill-badge ${
+                <SpotlightCard
+                  tiltIntensity={12}
+                  spotlightColor={
+                    category.color === "primary"
+                      ? "rgba(0, 220, 240, 0.18)"
+                      : "rgba(168, 85, 247, 0.18)"
+                  }
+                  className="glass-card rounded-2xl p-6 h-full border border-border/60 hover:border-primary/50 transition-all duration-300 group"
+                >
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2.5 text-foreground">
+                    <span
+                      className={`w-2.5 h-2.5 rounded-full shadow-[0_0_10px_currentColor] ${
                         category.color === "primary"
-                          ? "border-primary/30 hover:border-primary/60"
-                          : "border-secondary/30 hover:border-secondary/60"
+                          ? "bg-primary text-primary"
+                          : "bg-secondary text-secondary"
                       }`}
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
-                </div>
+                    />
+                    {category.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill, skillIndex) => (
+                      <motion.span
+                        key={skill}
+                        initial={{ opacity: 0, scale: 0.85 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{
+                          duration: 0.4,
+                          delay: categoryIndex * 0.08 + skillIndex * 0.04,
+                        }}
+                        className={`skill-badge border text-xs sm:text-sm font-medium transition-all duration-300 ${
+                          category.color === "primary"
+                            ? "border-primary/30 hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_15px_hsl(var(--primary)/0.3)]"
+                            : "border-secondary/30 hover:border-secondary hover:bg-secondary/10 hover:shadow-[0_0_15px_hsl(var(--secondary)/0.3)]"
+                        }`}
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                </SpotlightCard>
               </motion.div>
             ))}
           </div>
 
-          {/* Tech Icons Grid */}
+          {/* Interactive Tech Matrix Floating Bar */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="mt-16 glass-card rounded-2xl p-8"
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-14 glass-card rounded-2xl p-6 md:p-8 border border-border/70 backdrop-blur-2xl"
           >
-            <div className="flex flex-wrap justify-center gap-8 md:gap-12 text-4xl md:text-5xl opacity-60 hover:opacity-100 transition-opacity duration-300">
-              <motion.div
-                whileHover={{ scale: 1.2, y: -5 }}
-                className="cursor-pointer"
-              >
-                <span className="text-[#61DAFB]">⚛️</span>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.2, y: -5 }}
-                className="cursor-pointer"
-              >
-                <span className="text-[#3178C6]">🔷</span>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.2, y: -5 }}
-                className="cursor-pointer"
-              >
-                <span className="text-[#38BDF8]">🌊</span>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.2, y: -5 }}
-                className="cursor-pointer"
-              >
-                <span>📱</span>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.2, y: -5 }}
-                className="cursor-pointer"
-              >
-                <span>🚀</span>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.2, y: -5 }}
-                className="cursor-pointer"
-              >
-                <span>⚡</span>
-              </motion.div>
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="text-center md:text-left">
+                <h4 className="text-base font-bold text-foreground">Architecting for Performance & Scale</h4>
+                <p className="text-xs text-muted-foreground mt-1">SEO-first, accessible, responsive design with clean code conventions</p>
+              </div>
+              <div className="flex flex-wrap justify-center gap-3">
+                {["Lighthouse 95+", "Clean Motion 60fps", "Zero Layout Shift", "TypeScript Strict"].map((badge) => (
+                  <span
+                    key={badge}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-mono text-primary"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                    {badge}
+                  </span>
+                ))}
+              </div>
             </div>
           </motion.div>
         </motion.div>

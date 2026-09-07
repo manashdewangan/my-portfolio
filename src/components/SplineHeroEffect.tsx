@@ -72,32 +72,76 @@ export function SplineHeroEffect() {
     >
       <motion.div
         className="spline-fallback-scene"
-        animate={{ rotateX: [56, 60, 56], rotateZ: [-8, -2, -8] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ rotateX: [52, 58, 52], rotateZ: [-6, 2, -6] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       >
+        {/* Floating 3D Depth Planes with Live Code/Interface Glow */}
         <motion.div
-          className="spline-fallback-plane spline-fallback-plane-a"
-          animate={{ y: [-12, 14, -12] }}
+          className="spline-fallback-plane spline-fallback-plane-a group"
+          animate={{ y: [-15, 15, -15], rotateZ: [-2, 3, -2] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        />
+        >
+          <div className="flex items-center gap-2 border-b border-primary/20 pb-2 mb-2">
+            <span className="h-2 w-2 rounded-full bg-red-400/80" />
+            <span className="h-2 w-2 rounded-full bg-yellow-400/80" />
+            <span className="h-2 w-2 rounded-full bg-green-400/80" />
+            <span className="text-[10px] font-mono text-muted-foreground ml-auto">App.tsx</span>
+          </div>
+          <div className="space-y-1.5 font-mono text-[10px] text-primary/80">
+            <div className="flex gap-2">
+              <span className="text-secondary">const</span>
+              <span>architect</span> = <span className="text-emerald-400">&apos;scalable&apos;</span>;
+            </div>
+            <div className="h-1.5 w-3/4 rounded bg-primary/20" />
+            <div className="h-1.5 w-1/2 rounded bg-secondary/20" />
+          </div>
+        </motion.div>
+
         <motion.div
           className="spline-fallback-plane spline-fallback-plane-b"
-          animate={{ y: [18, -10, 18] }}
+          animate={{ y: [16, -14, 16], rotateZ: [2, -3, 2] }}
           transition={{ duration: 8.5, repeat: Infinity, ease: "easeInOut" }}
-        />
+        >
+          <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-semibold text-primary">Performance</span>
+              <span className="text-[10px] font-mono text-emerald-400">99%</span>
+            </div>
+            <div className="w-full bg-primary/10 rounded-full h-2 overflow-hidden">
+              <div className="bg-gradient-to-r from-primary to-secondary h-full w-[94%]" />
+            </div>
+            <div className="flex gap-1.5">
+              <span className="text-[9px] px-1.5 py-0.5 rounded bg-primary/10 text-primary">React 19</span>
+              <span className="text-[9px] px-1.5 py-0.5 rounded bg-secondary/10 text-secondary">Next.js</span>
+            </div>
+          </div>
+        </motion.div>
+
         <motion.div
           className="spline-fallback-plane spline-fallback-plane-c"
-          animate={{ y: [-8, 18, -8] }}
+          animate={{ y: [-10, 18, -10], rotateZ: [-3, 2, -3] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        />
+        >
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary font-bold text-sm">
+              3D
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-foreground">Interactive Motion</div>
+              <div className="text-[10px] text-muted-foreground">WebGL + Framer</div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* 3D Rotating Core Rings */}
         <motion.div
           className="spline-fallback-core"
           animate={{ rotate: 360 }}
-          transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         >
-          <span />
-          <span />
-          <span />
+          <span className="border-primary/40 shadow-[0_0_30px_hsl(var(--primary)/0.3)]" />
+          <span className="border-secondary/40 shadow-[0_0_30px_hsl(var(--secondary)/0.3)]" />
+          <span className="border-cyan-400/40 shadow-[0_0_30px_rgba(6,182,212,0.3)]" />
         </motion.div>
       </motion.div>
       <div className="spline-hero-fade" />

@@ -192,7 +192,7 @@ export const projects: Project[] = [
       "React",
     ],
 
-    live: "https://smart-booking-frontend-pi.vercel.app/",
+    live: "https://serviceopsq.intellq.cloud",
 
     github: "",
 

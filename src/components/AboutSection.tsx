@@ -27,15 +27,17 @@ const highlights = [
   },
 ];
 
+import { SpotlightCard } from "./SpotlightCard";
+
 export const AboutSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section id="about" className="py-32 relative overflow-hidden">
-      <div className="floating-blob blob-purple w-[400px] h-[400px] top-20 -right-20 opacity-50" />
+      <div className="floating-blob blob-purple w-[400px] h-[400px] top-20 -right-20 opacity-50 pointer-events-none" />
 
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 60 }}
@@ -65,27 +67,24 @@ export const AboutSection = () => {
               className="space-y-6"
             >
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Im a passionate
-                <span className="text-foreground font-medium">
+                I&apos;m a passionate{" "}
+                <span className="text-foreground font-semibold">
                   Full-Stack & Mobile Developer
                 </span>{" "}
                 with a B.Tech in Computer Science & Engineering. I specialize in
                 building responsive, scalable, user-centric applications with
-                clean architecture and reusable components.
+                clean architecture, reusable components, and high-performance UX.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                With hands-on experience in{" "}
-                <span className="text-primary">React.js</span>,{" "}
-                <span className="text-primary">Next.js</span>,{" "}
-                <span className="text-primary">React Native</span>,{" "}
-                <span className="text-primary">TypeScript</span>, and{" "}
-                <span className="text-primary">Tailwind CSS</span>, I love
-                turning ideas into functional digital products while focusing on
-                UX, performance, and maintainability.
+                With deep hands-on expertise in{" "}
+                <span className="text-primary font-medium">React.js</span>,{" "}
+                <span className="text-primary font-medium">Next.js</span>,{" "}
+                <span className="text-primary font-medium">React Native</span>,{" "}
+                <span className="text-primary font-medium">TypeScript</span>, and{" "}
+                <span className="text-primary font-medium">Tailwind CSS</span>, I enjoy turning ambitious ideas into production-grade digital products.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Currently seeking opportunities to contribute to frontend
-                development teams and modern product engineering.
+                Currently open to frontend/full-stack developer roles, impactful product teams, and freelance collaborations.
               </p>
             </motion.div>
 
@@ -93,23 +92,29 @@ export const AboutSection = () => {
               initial={{ opacity: 0, x: 40 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="grid grid-cols-2 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
             >
               {highlights.map((item, index) => (
                 <motion.div
                   key={item.title}
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                  className="glass-card p-6 rounded-2xl group hover:shadow-[var(--shadow-hover)] transition-all duration-300"
+                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <item.icon className="text-primary" size={24} />
-                  </div>
-                  <h3 className="font-semibold mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {item.description}
-                  </p>
+                  <SpotlightCard
+                    tiltIntensity={14}
+                    className="glass-card p-6 h-full border border-border/60 hover:border-primary/50 transition-all duration-300 group"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
+                      <item.icon className="text-primary" size={24} />
+                    </div>
+                    <h3 className="font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {item.description}
+                    </p>
+                  </SpotlightCard>
                 </motion.div>
               ))}
             </motion.div>
