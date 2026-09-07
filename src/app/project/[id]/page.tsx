@@ -497,6 +497,7 @@ export default function Page() {
               project={project}
               media={videoMedia ?? media[0]}
               priority
+              allowPreview
               className="aspect-[16/9]"
             />
           </motion.div>
@@ -530,6 +531,7 @@ export default function Page() {
                   <ProjectMediaFrame
                     project={project}
                     media={item}
+                    allowPreview
                     className="aspect-video"
                   />
                 </motion.div>
